@@ -4,5 +4,9 @@
     <string name="app_name">Spaar</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_update">UpdateActivity</string>
+    <string name="empty_input">Введите значение</string>
+    <string name="find">Найти</string>
+    <string name="title_activity_product_selection">ProductSelectionActivity</string>
 
 </resources>
