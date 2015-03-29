@@ -1,5 +1,6 @@
 package com.example.sasha.spaar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -8,29 +9,65 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProductSelectionActivity extends ActionBarActivity {
 
-    String[] products = {"Milk", "Orange", "Butter", "Zephir"};
+    List<String> products = new ArrayList<String>();
+
+    String editTextProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_selection);
 
+        products.add("Butter");
+        products.add("Milk");
+        //get data from main activity
+        editTextProduct = getIntent().getStringExtra("product_key");
+        products.add(editTextProduct);
+
         ListView listView = (ListView)findViewById(R.id.lvProducts);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, products);
         listView.setAdapter(adapter);
 
-        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String chosedLitViewValue = ((TextView)view).getText().toString();
+                Toast.makeText(getApplicationContext(), chosedLitViewValue, Toast.LENGTH_SHORT);
+
+                Intent backToMainActivityIntent = new Intent(ProductSelectionActivity.this, MainActivity.class);
+                backToMainActivityIntent.putExtra("SELECTED_VALUE", chosedLitViewValue);
+                setResult(RESULT_OK, backToMainActivityIntent);
+                //finishActivity(RESULT_OK);
+                finish();
+                /*Toast.makeText(getApplicationContext(),
+                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
+                        .show();*/
+            }
+        });
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String value = view.toString();
-                Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT);
+                String chosedLitViewValue = ((TextView)view).getText().toString();
+                Toast.makeText(getApplicationContext(), chosedLitViewValue, Toast.LENGTH_SHORT);
+
+                Intent backToMainActivityIntent = new Intent(ProductSelectionActivity.this, MainActivity.class);
+                backToMainActivityIntent.putExtra("SELECTED_VALUE", chosedLitViewValue);
+                setResult(RESULT_OK, backToMainActivityIntent);
+                finishActivity(RESULT_OK);
+                //startActivity(backToMainActivityIntent);
             }
-        };
+        });*/
     }
 
 

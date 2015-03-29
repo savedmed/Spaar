@@ -1,6 +1,8 @@
 package com.example.sasha.spaar;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -24,6 +26,8 @@ public class MainActivity extends ActionBarActivity {
     private EditText productInput;
     private LinearLayout mainRelativeLayout;
 
+    private static final String TAG = "MainActivity";
+
     RelativeLayout.LayoutParams lparams = new RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
@@ -39,25 +43,41 @@ public class MainActivity extends ActionBarActivity {
         addToListBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String value = productInput.getText().toString();
-                if(value.isEmpty()){
+                String textEditProduct = productInput.getText().toString();
+                if(textEditProduct.isEmpty()){
                     Toast.makeText(MainActivity.this, R.string.empty_input, Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    productList.add(value);
-                    TextView newTextView = new TextView(MainActivity.this);
-                    newTextView.setLayoutParams(lparams);
-                    newTextView.setText(value);
-                    MainActivity.this.mainRelativeLayout.addView(newTextView);
                 }
 
                 Intent openProductSelectionActivity = new Intent(getApplicationContext(), ProductSelectionActivity.class);
+                //passing data from EditText to ProductSelectionActivity
+                openProductSelectionActivity.putExtra("product_key", textEditProduct);
                 startActivityForResult(openProductSelectionActivity, 0);
         }
         });
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == Activity.RESULT_CANCELED){
+            //When we click back button
+            Toast.makeText(this, "Result canceled", Toast.LENGTH_LONG);
+        }
+        else {
+            String result = data.getStringExtra("SELECTED_VALUE");
+            productList.add(result);
+            TextView newTextView = new TextView(MainActivity.this);
+            newTextView.setLayoutParams(lparams);
+            newTextView.setText(result);
+            MainActivity.this.mainRelativeLayout.addView(newTextView);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
