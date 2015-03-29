@@ -12,6 +12,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sasha.spaar.DAO.ProductsDAO;
+import com.example.sasha.spaar.Models.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +22,30 @@ import java.util.List;
 public class ProductSelectionActivity extends ActionBarActivity {
 
     List<String> products = new ArrayList<String>();
-
+    ProductsDAO productsDAO;
     String editTextProduct;
+
+    Product testProduct = new Product("Very good milk");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_selection);
 
-        products.add("Butter");
-        products.add("Milk");
+        productsDAO = new ProductsDAO(this);
+        productsDAO.OpenDatabase();
+
+        //productsDAO.createProduct(testProduct);
+
+        List<Product> dbProducts = productsDAO.getAllProducts();
+
         //get data from main activity
         editTextProduct = getIntent().getStringExtra("product_key");
-        products.add(editTextProduct);
+        //products.add(editTextProduct);
 
         ListView listView = (ListView)findViewById(R.id.lvProducts);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, products);
+        ArrayAdapter<Product> adapter = new ArrayAdapter<Product>(this, android.R.layout.simple_list_item_1, dbProducts);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
