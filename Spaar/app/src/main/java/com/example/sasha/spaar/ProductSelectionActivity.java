@@ -61,24 +61,9 @@ public class ProductSelectionActivity extends ActionBarActivity {
                 setResult(RESULT_OK, backToMainActivityIntent);
                 //finishActivity(RESULT_OK);
                 finish();
-                /*Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();*/
+
             }
         });
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String chosedLitViewValue = ((TextView)view).getText().toString();
-                Toast.makeText(getApplicationContext(), chosedLitViewValue, Toast.LENGTH_SHORT);
-
-                Intent backToMainActivityIntent = new Intent(ProductSelectionActivity.this, MainActivity.class);
-                backToMainActivityIntent.putExtra("SELECTED_VALUE", chosedLitViewValue);
-                setResult(RESULT_OK, backToMainActivityIntent);
-                finishActivity(RESULT_OK);
-                //startActivity(backToMainActivityIntent);
-            }
-        });*/
     }
 
 
