@@ -100,4 +100,11 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Created by Sasha on 12.04.2015.
+     */
+    public static class Uploader {
+
+    }
 }

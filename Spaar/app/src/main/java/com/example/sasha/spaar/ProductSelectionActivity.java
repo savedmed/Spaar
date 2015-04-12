@@ -33,10 +33,18 @@ public class ProductSelectionActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_selection);
 
+        // Uploading DB by parsed data
+        /*Uploader uploader = new Uploader();
+        try {
+            uploader.uploadAll(this);
+        }
+        catch ( IOException ex){
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG);
+        }*/
+
+        // Open connection for retrieving data
         productsDAO = new ProductsDAO(this);
         productsDAO.OpenDatabase();
-
-        //productsDAO.createProduct(testProduct);
 
         List<Product> dbProducts = productsDAO.getAllProducts();
 
@@ -44,6 +52,7 @@ public class ProductSelectionActivity extends ActionBarActivity {
         editTextProduct = getIntent().getStringExtra("product_key");
         //products.add(editTextProduct);
 
+        // display products from DB in listview
         ListView listView = (ListView)findViewById(R.id.lvProducts);
         ArrayAdapter<Product> adapter = new ArrayAdapter<Product>(this, android.R.layout.simple_list_item_1, dbProducts);
         listView.setAdapter(adapter);
